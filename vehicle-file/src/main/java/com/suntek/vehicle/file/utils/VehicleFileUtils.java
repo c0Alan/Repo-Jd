@@ -8,6 +8,9 @@ import java.util.Map;
 
 /**
  * 车档工具类
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:04
  */
 public class VehicleFileUtils {
 

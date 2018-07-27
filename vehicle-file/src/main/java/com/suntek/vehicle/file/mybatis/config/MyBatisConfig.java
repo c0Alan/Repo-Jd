@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 
 /**
  * MyBatis 配置类
- *
- * @author liuxl
- * @date  23:15
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:03
  */
 //@Configuration
 public class MyBatisConfig {

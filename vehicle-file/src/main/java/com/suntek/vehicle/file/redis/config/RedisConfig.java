@@ -9,7 +9,10 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * Created by Administrator on 2017/3/1 14:45.
+ * Redis 配置类
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:04
  */
 @Configuration
 public class RedisConfig {

@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 定时器
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:04
+ */
 @Component
 @EnableScheduling
 public class SchedulingConfig {

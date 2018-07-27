@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * kafka 消费者工厂
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:03
+ */
 @Repository
 public class ConsumerFactory {
 

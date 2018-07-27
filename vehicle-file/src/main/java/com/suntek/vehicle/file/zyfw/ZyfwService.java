@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 资源服务接口访问 Service
+ * 资源服务接口访问方式 Service
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:04
  */
 @Service
 public class ZyfwService {

@@ -3,6 +3,12 @@ package com.suntek.vehicle.file.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * 车档信息表
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:03
+ */
 public class VehicleArchivesInformation {
     private String xh;
 

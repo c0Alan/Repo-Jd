@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * kafka 消费 Service
+ * 
+ * @author liuxilin
+ * @date 2018/7/27 22:04
+ */
 @Service
 public class VehicleFileKafkaService implements IVehicleFileService {
 
