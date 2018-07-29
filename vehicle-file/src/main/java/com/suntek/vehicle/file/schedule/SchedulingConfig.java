@@ -53,7 +53,7 @@ public class SchedulingConfig {
      * 停止消费 kafka 消息服务 定时任务
      * 每天晚上 23:55:00 停止消费
      */
-    @Scheduled(cron = "0 49 11 * * ? ")
+    @Scheduled(cron = "${vehicle-file.schedule.kafka.stop.corn}")
     public void stopKafkaJob() {
         vehicleFileKafkaService.stop();
     }
@@ -71,7 +71,7 @@ public class SchedulingConfig {
      * 消费 kafka 消息服务 定时任务
      * 每天晚上 00:01:00 开始任务
      */
-    @Scheduled(cron = "0 */30 * * * ? ")
+    @Scheduled(cron = "${vehicle-file.schedule.kafka.start.corn}")
     public void processKafkaJob(){
         triggerKafkaJob();
     }

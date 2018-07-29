@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * 车档工具类
- * 
+ *
  * @author liuxilin
  * @date 2018/7/27 22:04
  */
@@ -32,18 +32,28 @@ public class VehicleFileUtils {
     }
 
     /**
-     * Map 的键转小写, 方便 Map 转 Bean
+     * Map 的键转小写, 脏数据处理, 方便 Map 转 Bean
+     *
      * @param map
      * @return
      */
-    public static Map<String, Object> keyToLowerCase(Map<String, Object> map){
-        if(map == null){
+    public static Map<String, Object> keyToLowerCase(Map<String, Object> map) {
+        if (map == null) {
             return null;
         }
 
         Map<String, Object> newMap = new HashMap<>();
 
-        for(Map.Entry<String, Object> entry : map.entrySet()){
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String value = (String) entry.getValue();
+            if (value == null) {
+                continue;
+            }
+
+            if (StringUtils.lowerCase(StringUtils.trim(value)).equals("null")) {
+                continue;
+            }
+
             String key = StringUtils.lowerCase(entry.getKey());
             newMap.put(key, entry.getValue());
         }

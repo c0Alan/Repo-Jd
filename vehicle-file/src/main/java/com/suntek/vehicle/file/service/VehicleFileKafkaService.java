@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * kafka 消费 Service
- * 
+ *
  * @author liuxilin
  * @date 2018/7/27 22:04
  */
@@ -75,7 +75,6 @@ public class VehicleFileKafkaService implements IVehicleFileService {
             return;
         }
         for (; ; ) {
-            getHphmList("");
             if (!isProcessingKafka(drkIndex)) {
                 break;
             }
@@ -83,10 +82,13 @@ public class VehicleFileKafkaService implements IVehicleFileService {
             if (null != msgList && msgList.count() > 0) {
                 for (ConsumerRecord<String, String> record : msgList) {
                     List<String> hphmList = getHphmList(record.value());
+                    /*List<String> hphmList = new ArrayList<>(); // 测试
+                    hphmList.add(record.value()); // 测试*/
                     if (hphmList == null) {
                         return;
                     }
                     for (String key : hphmList) {
+                        logger.info("一车一档 - kafka - 车牌号, " + key);
                         if (isCdxxExisted(key)) {
                             continue;
                         }
@@ -106,24 +108,25 @@ public class VehicleFileKafkaService implements IVehicleFileService {
     }
 
     private List<String> getHphmList(String kafkaMsg) {
-//        JSONObject msg = JSONObject.parseObject(kafkaMsg); // 先注释掉用测试数据
-        JSONObject msg = JSONObject.parseObject(VehicleFileConsts.KAFKA_MSG);
-        JSONArray jArr = (JSONArray) msg.get("BODY");
-        if (jArr == null) {
+//        logger.info("一车一档 - kafka - 获取到的 kafka 数据, " + kafkaMsg);
+        JSONObject msg = JSONObject.parseObject(kafkaMsg); // 先注释掉用测试数据
+        if (msg == null) {
+            return null;
+        }
+//        JSONObject msg = JSONObject.parseObject(VehicleFileConsts.KAFKA_MSG); // 测试数据
+        JSONObject data = (JSONObject) msg.get("custom_data");
+        if (data == null) {
             return null;
         }
 
         List<String> hphmList = new ArrayList<>();
-        for (Object o : jArr) {
-            JSONObject jo = (JSONObject) o;
-            hphmList.add((String) jo.get("HPHM"));
-        }
-//        return hphmList;
+        hphmList.add((String) data.get("plate_info_ex"));
+        return hphmList;
 
         // 以下是测试数据
-        List<String> tmpList = new ArrayList<>();
-        tmpList.add(kafkaMsg);
-        return tmpList;
+//        List<String> tmpList = new ArrayList<>();
+//        tmpList.add(kafkaMsg);
+//        return tmpList;
     }
 
     /**

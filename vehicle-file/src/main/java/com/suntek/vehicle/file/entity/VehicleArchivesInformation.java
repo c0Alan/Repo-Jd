@@ -1339,4 +1339,12 @@ public class VehicleArchivesInformation {
     public void setZykrksj(Date zykrksj) {
         this.zykrksj = zykrksj;
     }
+
+    public String toString() {
+        return "VehicleArchivesInformation{" +
+                "xh='" + xh + '\'' +
+                ", hpzl='" + hpzl + '\'' +
+                ", fhgzrq='" + fhgzrq + '\'' +
+                '}';
+    }
 }

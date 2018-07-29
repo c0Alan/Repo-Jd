@@ -7,6 +7,8 @@ import com.suntek.vehicle.file.mybatis.mapper.VehicleArchivesInformationMapper;
 import com.suntek.vehicle.file.utils.VehicleFileUtils;
 import com.suntek.vehicle.file.zyfw.ZyfwService;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.Converter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -14,13 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * 资源服务访问 Service
- * 
+ *
  * @author liuxilin
  * @date 2018/7/27 22:04
  */
@@ -73,14 +77,31 @@ public class VehicleFileZyfwService implements IVehicleFileService {
                 }
                 VehicleArchivesInformation information = new VehicleArchivesInformation();
                 try {
+                    ConvertUtils.register(new Converter() {
+                        @Override
+                        public Object convert(Class aClass, Object o) {
+                            String p = (String) o;
+                            if (p == null || p.trim().length() == 0) {
+                                return null;
+                            }
+                            try {
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                return df.parse(p.trim());
+                            } catch (Exception e) {
+                                return null;
+                            }
+
+                        }
+                    }, Date.class);
                     BeanUtils.populate(information, VehicleFileUtils.keyToLowerCase(record));
-//                    vehicleArchivesInformationMapper.insert(information); // 入库, 暂时注释掉
+                    vehicleArchivesInformationMapper.insert(information); // 入库, 暂时注释掉
+                    logger.info(information);
+                    addToYrkCdxx(hphm, hphm);
+                    logger.info("一车一档 - zyfw - 新增入库, key= " + hphm);
                 } catch (Exception e) {
-                    logger.error("一车一档 - zyfw - record 转 VehicleArchivesInformation 失败, " + hphm);
+                    logger.error("一车一档 - zyfw - record 转 VehicleArchivesInformation 失败, " + hphm, e);
                 }
             }
-            addToYrkCdxx(hphm, hphm);
-            logger.info("一车一档 - zyfw - 新增入库, key= " + hphm);
         } else {
             logger.info("一车一档 - zyfw - 资源服务无数据, key= " + hphm);
         }
