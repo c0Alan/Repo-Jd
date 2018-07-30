@@ -1,6 +1,5 @@
 package com.suntek.vehicle.file.service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.suntek.vehicle.file.consts.ProcessStatus;
 import com.suntek.vehicle.file.consts.VehicleFileConsts;
@@ -104,6 +103,7 @@ public class VehicleFileKafkaService implements IVehicleFileService {
         if (consumer != null) {
             consumer.close();
         }
+        stop();
         logger.info("一车一档 - kafka - 消息处理结束!");
     }
 
